@@ -35,7 +35,7 @@ namespace KitchenEquipment.Controllers
                 var regUser = _userService.GetUser(Mapper.Map<UserDto>(user).Email);
                 if (regUser != null)
                 {
-                    ModelState.AddModelError("", "The user already exists.");
+                    ModelState.AddModelError("", "Такой пользователь уже существует.");
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace KitchenEquipment.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.Name, userAuth.FullName),
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

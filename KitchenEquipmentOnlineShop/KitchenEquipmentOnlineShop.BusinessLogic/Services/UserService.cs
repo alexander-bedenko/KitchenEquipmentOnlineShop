@@ -17,9 +17,10 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
             : base(uow)
         {
         }
+
         public UserDto AutheticateUser(string email, string password)
         {
-            var user = _uow.Repository<User>().GetAsync(x => x.Email.Equals(email));
+            var user = _uow.Repository<User>().Get(x => x.Email.Equals(email));
             while (true)
             {
                 if (IsUserValid(user, password))
@@ -32,8 +33,8 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
 
         public UserDto GetUser(string email)
         {
-            var user = _uow.Repository<User>().GetAsync(x => x.Email.Equals(email));
-            return Mapper.Map<UserDto>(user);
+            var user = _uow.Repository<User>().Get(u => u.Email == email);
+            return Mapper.Map<User, UserDto>(user);
         }
 
         public async Task RegisterUser(UserDto userDto)
@@ -44,10 +45,10 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
             await _uow.Commit();
         }
 
-        private bool IsUserValid(Task<User> user, string password)
+        private bool IsUserValid(User user, string password)
         {
             var hashedPassword = HashProvider.Hash(password);
-            return user?.Result.Password == hashedPassword;
+            return user?.Password == hashedPassword;
         }
     }
 }
