@@ -7,5 +7,6 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Interfaces
     {
         UserDto AutheticateUser(string email, string password);
         Task RegisterUser(UserDto userDto);
+        UserDto GetUser(string email);
     }
 }

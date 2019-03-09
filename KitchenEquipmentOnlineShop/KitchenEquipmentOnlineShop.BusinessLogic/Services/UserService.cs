@@ -30,6 +30,12 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
             return Mapper.Map<UserDto>(user);
         }
 
+        public UserDto GetUser(string email)
+        {
+            var user = _uow.Repository<User>().GetAsync(x => x.Email.Equals(email));
+            return Mapper.Map<UserDto>(user);
+        }
+
         public async Task RegisterUser(UserDto userDto)
         {
             userDto.Password = HashProvider.Hash(userDto.Password);
