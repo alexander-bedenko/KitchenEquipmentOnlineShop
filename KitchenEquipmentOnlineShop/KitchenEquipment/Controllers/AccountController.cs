@@ -21,6 +21,7 @@ namespace KitchenEquipment.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return PartialView("_Register");
@@ -76,7 +77,7 @@ namespace KitchenEquipment.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Login is not registered.");
+                ModelState.AddModelError("", "Пользователь не зарегистрирован.");
             }
 
             return RedirectToAction("Index", "Home", user);

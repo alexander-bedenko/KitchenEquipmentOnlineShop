@@ -6,7 +6,8 @@
     <meta name="description" content="Интернет магазин кухонной техники. Вытяжки, кухонные мойки.">
     <title>Интернет магазин кухонной техники.</title>
     <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet">
     <!-- Fontawesome core CSS -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
     <!--GOOGLE FONT -->
@@ -15,6 +16,7 @@
     <link href="assets/ItemSlider/css/main-style.css" rel="stylesheet" />
     <!-- custom CSS here -->
     <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/modal.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -59,6 +61,9 @@
         <!-- /.container-fluid -->
     </nav>
     @RenderBody()
+    
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-9">
@@ -69,97 +74,107 @@
 
 
                 </div>
+                
+                <div id="mainModal" class="modal fade in">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div id="mainDialogContent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="main box-border">
                     <div id="mi-slider" class="mi-slider">
                         <ul>
 
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/1.jpg" alt="img01"><h4>Boots</h4>
+                                    <img src="assets/ItemSlider/images/1.jpg" alt="Слайдеры"><h4>Слайдеры</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/2.jpg" alt="img02"><h4>Oxfords</h4>
+                                    <img src="assets/ItemSlider/images/2.jpg" alt="Классика"><h4>Классика</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/3.jpg" alt="img03"><h4>Loafers</h4>
+                                    <img src="assets/ItemSlider/images/3.jpg" alt="Модерн"><h4>Модерн</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/4.jpg" alt="img04"><h4>Sneakers</h4>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/ItemSlider/images/5.jpg" alt="img05"><h4>Belts</h4>
+                                    <img src="assets/ItemSlider/images/4.jpg" alt="Ретро"><h4>Ретро</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/6.jpg" alt="img06"><h4>Hats &amp; Caps</h4>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/ItemSlider/images/7.jpg" alt="img07"><h4>Sunglasses</h4>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="assets/ItemSlider/images/8.jpg" alt="img08"><h4>Scarves</h4>
+                                    <img src="assets/ItemSlider/images/4-1.jpg" alt="Встраиваемые"><h4>Встраиваемые</h4>
                                 </a>
                             </li>
                         </ul>
                         <ul>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/9.jpg" alt="img09"><h4>Casual</h4>
+                                    <img src="assets/ItemSlider/images/5.jpg" alt="Круглые и овальные"><h4>Круглые и овальные</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/10.jpg" alt="img10"><h4>Luxury</h4>
+                                    <img src="assets/ItemSlider/images/6.jpg" alt="Квадратные и прямоугольные"><h4>Квадратные и прямоугольные</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/11.jpg" alt="img11"><h4>Sport</h4>
+                                    <img src="assets/ItemSlider/images/7.jpg" alt="1.5 чаши"><h4>1.5 чаши</h4>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/ItemSlider/images/8.jpg" alt="2 чаши"><h4>2 чаши</h4>
                                 </a>
                             </li>
                         </ul>
                         <ul>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/12.jpg" alt="img12"><h4>Carry-Ons</h4>
+                                    <img src="assets/ItemSlider/images/9.jpg" alt="Классические"><h4>Классические</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/13.jpg" alt="img13"><h4>Duffel Bags</h4>
+                                    <img src="assets/ItemSlider/images/10.jpg" alt="Модерн"><h4>Модерн</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/14.jpg" alt="img14"><h4>Laptop Bags</h4>
+                                    <img src="assets/ItemSlider/images/11.jpg" alt="Ретро"><h4>Ретро</h4>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/ItemSlider/images/12.jpg" alt="Фильтры уголные"><h4>Фильтры уголные</h4>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <img src="assets/ItemSlider/images/15.jpg" alt="img15"><h4>Briefcases</h4>
+                                    <img src="assets/ItemSlider/images/13.jpg" alt="Фильтры металлические"><h4>Фильтры металлические</h4>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="assets/ItemSlider/images/14.jpg" alt="Лампы освещения"><h4>Лампы освещения</h4>
                                 </a>
                             </li>
                         </ul>
                         <nav>
                             <a href="#">Вытяжки</a>
                             <a href="#">Мойки</a>
+                            <a href="#">Смесители</a>
                             <a href="#">Аксессуары</a>
-                            <a href="#">Bags</a>
                         </nav>
                     </div>
 
@@ -600,6 +615,8 @@
     <!--Slider JavaScript file  -->
     <script src="assets/ItemSlider/js/modernizr.custom.63321.js"></script>
     <script src="assets/ItemSlider/js/jquery.catslider.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
     <script>
         $(function () {
 

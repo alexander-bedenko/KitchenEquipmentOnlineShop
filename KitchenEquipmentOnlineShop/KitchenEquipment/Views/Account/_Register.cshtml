@@ -1,8 +1,8 @@
 ﻿@model KitchenEquipment.Models.UserViewModel
 
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/assets/js/jquery.validate.min.js"></script>
+<script src="~/assets/js/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/assets/js/jquery.unobtrusive-ajax.min.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -31,3 +31,9 @@
 
     </div>
 }
+ <script>
+    $(document).ready(function() {
+
+    $.validator.unobtrusive.parse();
+    });
+</script>
