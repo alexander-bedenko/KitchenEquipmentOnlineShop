@@ -71,13 +71,13 @@ color: #FFFFFF;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
 color: #FFF;
-background-color: #FFFFFF;
+background-color: #000;
 }
 .navbar-default .navbar-nav .open .dropdown-menu > li > a {
 color: #000;
 }
 .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-color: #000;
+color: #BBB;
 }
 /*=======================================
   BOOTSTRAP ADJUSTMENTS
