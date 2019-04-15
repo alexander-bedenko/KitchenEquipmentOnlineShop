@@ -6,13 +6,12 @@
 <script src="~/assets/js/jquery.unobtrusive-ajax.min.js"></script>
 <script src="assets/js/imagePreview.js"></script>
 
-
-@using (Html.BeginForm("Create", "Exhaust", FormMethod.Post, new {id = "upload", enctype = "multipart/form-data"}))
-    {
+@using (Html.BeginForm("Edit", "Exhaust", FormMethod.Post, new { id = "upload", enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     <div class="modal-body login-modal">
         <div class="modal-header">
-            <h4 class="modal-title text-center">Добавление вытяжки</h4>
+            <h4 class="modal-title text-center">Редактирование вытяжки</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
@@ -33,7 +32,7 @@
             <div class="dropdown">
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
                 <p>
-                    @Html.DropDownList("ExhaustHoodType",
+                    @Html.DropDownList("Type",
                         Html.GetEnumSelectList<ExhaustHoodType>(),
                         "Выберите тип вытяжки",
                         new {@class = "form-control"})
@@ -54,8 +53,10 @@
             <div class="form-group">
                 <input type="file" id="imageBrowes" class="form-control-file" name="uploadImage" />
             </div>
-            <div id="imgPreview" class="thumbnail" style="display: none">
-                <img class="img-responsive" id="targetImg" style="width: 100px; height: 80px;" />
+            <div id="imgPreview" class="thumbnail">
+                @Html.HiddenFor(model => model.Image)
+                @Html.Raw("<img class='img-responsive' id='targetImg' style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
+                          + Convert.ToBase64String(Model.Image) + "\" />")
                 <div class="caption">
                     <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
                     <span id="description"></span>
@@ -69,10 +70,9 @@
     </div>
 
     <div class="modal-footer">
-        <button id="create" class="btn btn-success" type="submit"><strong>Зарегистрировать</strong></button>
+        <button id="edit" class="btn btn-success" type="submit"><strong>Сохранить</strong></button>
     </div>
 }
-
 
 <script>
     $('#upload').submit(function (e) {

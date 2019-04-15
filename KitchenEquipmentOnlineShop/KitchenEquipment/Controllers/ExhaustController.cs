@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,6 +58,41 @@ namespace KitchenEquipment.Controllers
                     exhaust.Image = reader.GetBuffer();
                 }
                 await _exhaustHoodService.Create(Mapper.Map<ExhaustHoodDto>(exhaust));
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
+            SelectList list = new SelectList(companies, "Id", "CompanyName");
+            ViewBag.Companies = list;
+            var exhaust = _exhaustHoodService.Get(x => x.Id == id);
+            if (exhaust != null)
+            {
+                return PartialView("_Edit", Mapper.Map<ExhaustHoodDto, ExhaustHoodViewModel>(_exhaustHoodService.Get(x => x.Id == id)));
+            }
+            return View("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ExhaustHoodViewModel exhaust, IFormFile uploadImage)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uploadImage != null)
+                {
+                    using (var reader = new MemoryStream())
+                    {
+                        uploadImage.CopyTo(reader);
+                        exhaust.Image = reader.GetBuffer();
+                    }
+                }
+
+                await _exhaustHoodService.UpdateAsync(Mapper.Map<ExhaustHoodDto>(exhaust));
             }
 
             return RedirectToAction("Index");

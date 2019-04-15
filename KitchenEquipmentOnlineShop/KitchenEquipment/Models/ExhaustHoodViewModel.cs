@@ -1,4 +1,5 @@
 ﻿using KitchenEquipment.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace KitchenEquipment.Models
 {
@@ -7,6 +8,7 @@ namespace KitchenEquipment.Models
         public CompanyViewModel Companies { get; set; }
         public int? CompanyId { get; set; }
         public string CompanyName { get; set; }
+        [Required(ErrorMessage = "Введите название")]
         public string Name { get; set; }
         public decimal Price { get; set; }
         public byte[] Image { get; set; }
