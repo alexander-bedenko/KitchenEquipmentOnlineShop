@@ -1,22 +1,22 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KitchenEquipment.Enums
 {
     public enum ExhaustHoodType
     {
-        [DisplayName("Встраиваемая")]
+        [Display(Name = "Встраиваемая")]
         BuiltIn,
 
-        [DisplayName("Классическая")]
+        [Display(Name = "Классическая")]
         Classic,
 
-        [DisplayName("Ретро")]
+        [Display(Name = "Ретро")]
         Retro,
 
-        [DisplayName("Модерн")]
+        [Display(Name = "Модерн")]
         Modern,
 
-        [DisplayName("Слайдер")]
+        [Display(Name = "Слайдер")]
         Slider
     }
 }

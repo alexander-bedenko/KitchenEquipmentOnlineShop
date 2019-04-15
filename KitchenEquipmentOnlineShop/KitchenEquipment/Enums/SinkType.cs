@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KitchenEquipment.Enums
 {
     public enum SinkType
     {
-        [DisplayName("Нержавеющая сталь")]
+        [Display(Name = "Нержавеющая сталь")]
         StainlessSteel,
 
-        [DisplayName("Гранит")]
+        [Display(Name = "Гранит")]
         Granite
     }
 }

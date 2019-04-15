@@ -62,7 +62,7 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
 
         public TModel Get(Expression<Func<TEntity, bool>> filter)
         {
-            var entity = _uow.Repository<TEntity>().GetAsync(filter);
+            var entity = _uow.Repository<TEntity>().Get(filter);
             var dto = Mapper.Map<TModel>(entity);
 
             return dto;
