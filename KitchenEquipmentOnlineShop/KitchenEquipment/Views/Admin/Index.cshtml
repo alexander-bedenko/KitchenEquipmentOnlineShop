@@ -1,6 +1,4 @@
-﻿@using KitchenEquipment.Models
-
-@{
+﻿@{
     Layout = null;
 }
 
@@ -29,8 +27,10 @@
                 <a class="list-group-item list-group-item-action bg-light collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Кухонные вытяжки</a>
                 <div class="collapse" id="submenu1" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
+                        <li class="nav-item"><a id="section_all" class="nav-link py-1" href="#">Все модели</a></li>
                         <li class="nav-item"><a id="section_modern" class="nav-link py-1" href="#">Модерн</a></li>
-                        <li class="nav-item"><a id="ss" class="nav-link py-1" href="#">Orders</a></li>
+                        <li class="nav-item"><a id="section_classic" class="nav-link py-1" href="#">Классические</a></li>
+                        <li class="nav-item"><a id="section_builtin" class="nav-link py-1" href="#">Встраиваемые</a></li>
                         <li class="nav-item"><a class="nav-link py-1" href="">Orders</a></li>
                         <li class="nav-item">
                     </ul>
@@ -152,13 +152,17 @@
     });
 </script>
 <script>
-    $('#section_modern').on('click',
+    $('#section_all').on('click',
         function() {
             $('#ajax-content').load('@Url.Action("Index", "Exhaust")');
         });
-    $('#ss').on('click',
+    $('#section_modern').on('click',
         function() {
-            $('#ajax-content').load('@Url.Action("Login", "Account")');
+            $('#ajax-content').load('@Url.Action("Index", "Exhaust", new {section = "Modern"} )');
+        });
+    $('#section_builtin').on('click',
+        function() {
+            $('#ajax-content').load('@Url.Action("Index", "Exhaust", new {section = "BuiltIn"} )');
         });
 </script>
 </body>
