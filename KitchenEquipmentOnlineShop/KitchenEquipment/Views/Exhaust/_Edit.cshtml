@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Edit", "Exhaust", FormMethod.Post, new { id = "upload", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="modal-body login-modal">
+    <div class="modal-body">
         <div class="modal-header">
             <h4 class="modal-title text-center">Редактирование вытяжки</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -51,15 +51,17 @@
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                <input type="file" id="imageBrowes" class="form-control-file" name="uploadImage" />
-            </div>
-            <div id="imgPreview" class="thumbnail">
-                @Html.HiddenFor(model => model.Image)
-                @Html.Raw("<img class='img-responsive' id='targetImg' style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
-                          + Convert.ToBase64String(Model.Image) + "\" />")
-                <div class="caption">
-                    <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
-                    <span id="description"></span>
+                <div id="imgPreview" class="thumbnail">
+                    <label class="btn btn-light">
+                        Рисунок <input type="file" id="imageBrowes" class="form-control-file" name="uploadImage" hidden />
+                    </label>
+                    @Html.HiddenFor(model => model.Image)
+                    @Html.Raw("<img class='img-responsive' id='targetImg' style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
+                              + Convert.ToBase64String(Model.Image) + "\" />")
+                    <div class="caption">
+                        <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                        <span id="description"></span>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -71,6 +73,7 @@
 
     <div class="modal-footer">
         <button id="edit" class="btn btn-success" type="submit"><strong>Сохранить</strong></button>
+        <button id="cancel" name="cancel" data-dismiss="modal" class="btn btn-secondary"><strong>Отмена</strong></button>
     </div>
 }
 

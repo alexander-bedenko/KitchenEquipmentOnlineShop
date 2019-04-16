@@ -1,10 +1,13 @@
-﻿<div class="container">
+﻿@using KitchenEquipment.Enums
+@using KitchenEquipment.Extension
+
+<div class="container">
     <div class="row">
         <div class="col-md-9">
             <div class="well well-lg offer-box text-center">
 
 
-                Today's Offer : &nbsp; <span class="glyphicon glyphicon-cog"></span>&nbsp;40 % off  on purchase of $ 2,000 and above till 24 dec !
+                Горячее предложение : &nbsp; <span class="glyphicon glyphicon-cog"></span>&nbsp;10 % скидка  на покупку от 200 руб. и более 24 мая !
 
 
             </div>
@@ -21,8 +24,19 @@
             <div class="main box-border">
                 <div id="mi-slider" class="mi-slider">
                     <ul>
-
-                        <li>
+                        @{
+                            int i = 1;
+                            foreach (ExhaustHoodType key in (ExhaustHoodType[]) Enum.GetValues(typeof(ExhaustHoodType)))
+                             {
+                                 <li>
+                                     <a id="@key" href="#">
+                                         <img src="assets/ItemSlider/images/@(i).jpg" alt="@key.GetDisplayName()"><h4>@key.GetDisplayName()</h4>
+                                     </a>
+                                 </li>
+                                 i++;
+                             }
+                        }
+                        @*<li>
                             <a href="#">
                                 <img src="assets/ItemSlider/images/1.jpg" alt="Слайдеры"><h4>Слайдеры</h4>
                             </a>
@@ -44,9 +58,9 @@
                         </li>
                         <li>
                             <a href="#">
-                                <img src="assets/ItemSlider/images/4-1.jpg" alt="Встраиваемые"><h4>Встраиваемые</h4>
+                                <img src="assets/ItemSlider/images/5.jpg" alt="Встраиваемые"><h4>Встраиваемые</h4>
                             </a>
-                        </li>
+                        </li>*@
                     </ul>
                     <ul>
                         <li>
@@ -120,7 +134,7 @@
         <div class="col-md-3 text-center">
             <div class=" col-md-12 col-sm-6 col-xs-6">
                 <div class="offer-text">
-                    30% off here
+                    10% скидка
                 </div>
                 <div class="thumbnail product-box">
                     <img src="assets/img/dummyimg.png" alt="" />
@@ -132,7 +146,7 @@
             </div>
             <div class=" col-md-12 col-sm-6 col-xs-6">
                 <div class="offer-text2">
-                    30% off here
+                    10% скидка
                 </div>
                 <div class="thumbnail product-box">
                     <img src="assets/img/dummyimg.png" alt="" />
@@ -153,27 +167,13 @@
                     Кухонные вытяжки
                 </a>
                 <ul class="list-group">
-
-                    <li class="list-group-item">
-                        Классичекие
-                        <span class="label label-primary pull-right">234</span>
-                    </li>
-                    <li class="list-group-item">
-                        Модерн
-                        <span class="label label-success pull-right">34</span>
-                    </li>
-                    <li class="list-group-item">
-                        Слайдеры
-                        <span class="label label-danger pull-right">4</span>
-                    </li>
-                    <li class="list-group-item">
-                        Встраиваемые
-                        <span class="label label-info pull-right">434</span>
-                    </li>
-                    <li class="list-group-item">
-                        Ретро
-                        <span class="label label-success pull-right">34</span>
-                    </li>
+                    @foreach (ExhaustHoodType key in (ExhaustHoodType[])Enum.GetValues(typeof(ExhaustHoodType)))
+                    {
+                        <li class="list-group-item">
+                            <a class="nav-main" id="@key" href="#">@key.GetDisplayName()</a>
+                            <span class="label label-success pull-right">15</span>
+                        </li>
+                    }
                 </ul>
             </div>
             <!-- /.div -->
@@ -182,20 +182,13 @@
                     Кухонные мойки
                 </a>
                 <ul class="list-group">
-
-                    <li class="list-group-item">
-                        Men's Clothing
-                        <span class="label label-danger pull-right">300</span>
-                    </li>
-                    <li class="list-group-item">
-                        Women's Clothing
-                        <span class="label label-success pull-right">340</span>
-                    </li>
-                    <li class="list-group-item">
-                        Kid's Wear
-                        <span class="label label-info pull-right">735</span>
-                    </li>
-
+                    @foreach (SinkType key in (SinkType[])Enum.GetValues(typeof(SinkType)))
+                    {
+                        <li class="list-group-item">
+                            <a class="nav-main" id="@key" href="#">@key.GetDisplayName()</a>
+                            <span class="label label-success pull-right">15</span>
+                        </li>
+                    }
                 </ul>
             </div>
             <!-- /.div -->

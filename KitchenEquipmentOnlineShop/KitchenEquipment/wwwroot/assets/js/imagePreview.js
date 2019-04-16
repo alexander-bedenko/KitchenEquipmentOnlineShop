@@ -24,10 +24,10 @@ var ReadImage = function(file) {
             var height = this.height;
             var width = this.width;
             var type = file.type;
-            var size = ~~(file.size / 1024) + "KB";
+            var size = ~~(file.size / 1024) + "Кб";
 
             $("#targetImg").attr('src', _file.target.result);
-            $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+            $("#description").text("Размер: " + size + ", " + height + " х " + width + ", " + type + "");
             $("#imgPreview").show();
         };
     };

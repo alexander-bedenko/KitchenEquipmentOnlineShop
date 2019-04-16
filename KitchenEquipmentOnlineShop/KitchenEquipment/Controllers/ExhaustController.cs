@@ -24,21 +24,30 @@ namespace KitchenEquipment.Controllers
             _companyService = companyService;
         }
 
-        public IActionResult Index(string section)
+        public IActionResult Index(string section, int value)
         {
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
             ViewBag.Companies = list;
             var exhausts = Mapper.Map<IEnumerable<ExhaustHoodViewModel>>(_exhaustHoodService.GetAll());
+
+            foreach (var key in exhausts)
+            {
+                key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
+            }
+
             if (section != null)
             {
                 var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(section));
                 return PartialView("Index", exhaustVM);
             }
-            foreach (var key in exhausts)
+
+            if (value != 0)
             {
-                key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
+                var exhaustVM = exhausts.Where(x => x.CompanyId == value);
+                return PartialView("Index", exhaustVM);
             }
+
             return PartialView("Index", exhausts);
         }
 

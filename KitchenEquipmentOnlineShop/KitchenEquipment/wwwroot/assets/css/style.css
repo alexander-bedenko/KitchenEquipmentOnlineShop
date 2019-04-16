@@ -247,5 +247,10 @@ Custom css
     overflow-y: auto;
     overflow-x: auto;
     width: auto;
-    min-width: 420px;
+    min-width: 520px;
+}
+
+.list-group .nav-main {
+    font-weight: 100;
+    color: #333900;
 }
