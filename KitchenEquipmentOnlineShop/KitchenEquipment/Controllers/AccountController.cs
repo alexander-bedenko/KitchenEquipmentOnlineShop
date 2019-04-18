@@ -86,7 +86,8 @@ namespace KitchenEquipment.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return Ok();
         }
     }
 }

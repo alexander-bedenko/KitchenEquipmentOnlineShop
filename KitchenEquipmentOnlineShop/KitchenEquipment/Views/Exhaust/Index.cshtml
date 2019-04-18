@@ -1,4 +1,5 @@
-﻿@model IEnumerable<KitchenEquipment.Models.ExhaustHoodViewModel>
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<KitchenEquipment.Models.ExhaustHoodViewModel>
 
 <div class="table-wrapper">
     <div class="table-title">
@@ -30,7 +31,7 @@
             {
                 <tr>
                     <td>
-                        @Html.Raw("<img style='width:60px; height:40px;' src=\"data:image/jpeg;base64,"
+                        @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
                                   + Convert.ToBase64String(key.Image) + "\" />")
                     </td>
                     <td>@key.CompanyName</td>
@@ -48,16 +49,11 @@
         </tbody>
     </table>
     <div class="clearfix">
-        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-        <ul class="pagination">
-            <li class="page-item disabled"><a href="#">Previous</a></li>
-            <li class="page-item"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">4</a></li>
-            <li class="page-item"><a href="#" class="page-link">5</a></li>
-            <li class="page-item"><a href="#" class="page-link">Next</a></li>
-        </ul>
+        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+        <div id="contentPager">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+        <a class="card-link" href='javascript:history.go(-1)'><span class="fa fa fa-arrow-left"></span> На предыдущую страницу</a>
     </div>
 </div>
 
@@ -69,6 +65,33 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on("click", "#contentPager a", function () {
+        $.ajax({
+            url: $(this).attr("href"),
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+                $('#ajax-content').html(result);
+            }
+        });
+        return false;
+    });
+    $(document).ready(function () {
+        $(document).on("click", "#contentPager a[href]", function () {
+            $.ajax({
+                url: $(this).attr("href"),
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#ajax-content').html(result);
+                }
+            });
+            return false;
+        });
+    });
+</script>
 
 <script>
     function CallChangefunc(val) {

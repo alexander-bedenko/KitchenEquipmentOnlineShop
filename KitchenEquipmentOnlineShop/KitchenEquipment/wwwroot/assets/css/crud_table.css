@@ -260,3 +260,12 @@ table.table .avatar {
 .modal form label {
     font-weight: normal;
 }
+
+.table-wrapper {
+    margin-top: 0px;
+}
+
+table.table tr th, table.table tr td {
+    padding: 1px 15px;
+    font-size: small;
+}

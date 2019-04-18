@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 
 namespace KitchenEquipment.Controllers
 {
@@ -24,8 +25,13 @@ namespace KitchenEquipment.Controllers
             _companyService = companyService;
         }
 
-        public IActionResult Index(string section, int value)
+        public IActionResult Index(string section, int value, int? page)
         {
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            double averageRate = 0;
+            int sum = 0;
+
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
             ViewBag.Companies = list;
@@ -39,16 +45,16 @@ namespace KitchenEquipment.Controllers
             if (section != null)
             {
                 var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(section));
-                return PartialView("Index", exhaustVM);
+                return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
             }
 
             if (value != 0)
             {
                 var exhaustVM = exhausts.Where(x => x.CompanyId == value);
-                return PartialView("Index", exhaustVM);
+                return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
             }
 
-            return PartialView("Index", exhausts);
+            return PartialView("Index", exhausts.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize]
