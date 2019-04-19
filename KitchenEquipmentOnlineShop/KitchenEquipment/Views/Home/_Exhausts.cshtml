@@ -1,0 +1,49 @@
+﻿@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<KitchenEquipment.Models.ExhaustHoodViewModel>
+
+
+<div class="row" id="ajax-main-exhausts-content">
+@foreach (var key in Model)
+{
+    <div class="col-md-4 text-center col-sm-6 col-xs-6">
+        <div class="thumbnail product-box">
+            <img src="assets/img/dummyimg.png" alt="" />
+            <div class="caption">
+                <h3><a href="#">@key.CompanyName @key.Name </a></h3>
+                <p>Цена : <strong>@key.Price рур.</strong>  </p>
+                <p><a href="#">Ptional dismiss button </a></p>
+                <p>Ptional dismiss button in tional dismiss button in   </p>
+                <p><a href="#" class="btn btn-success" role="button">В корзину</a> <a href="#" class="btn btn-primary" role="button">Дополнительно</a></p>
+            </div>
+        </div>
+    </div>
+}
+</div>
+<div class="row" id="contentPager">
+
+    @Html.PagedListPager(Model, page => Url.Action("Exhausts", new { page = page }),
+        new PagedListRenderOptions {
+            UlElementClasses = new [] { "pagination alg-right-pad" },
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+
+</div>
+<script>
+    $(document).ready(function () {
+        $(document).on("click",
+            "#contentPager a[href]",
+            function () {
+                $.ajax({
+                    url: $(this).attr("href"),
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#exhausts').html(result);
+                    }
+                });
+                return false;
+            });
+    })
+</script>

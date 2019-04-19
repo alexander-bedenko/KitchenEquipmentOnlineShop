@@ -36,6 +36,7 @@ namespace KitchenEquipment
             });
 
             services.AddMvc();
+            services.AddMvc().AddControllersAsServices();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o => o.LoginPath = new PathString("/account/login"));

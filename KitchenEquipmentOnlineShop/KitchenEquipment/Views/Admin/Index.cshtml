@@ -110,6 +110,7 @@
             <div id="ajax-content">
 
             </div>
+            <img id="loading" style="width: 80px; height: 80px; position: fixed; top: 40%; left: 50%;" src="./assets/img/spinner.gif" />
         </div>
         <!-- /#page-content-wrapper -->
     </div>
@@ -130,6 +131,16 @@
             });
             $("#wrapper").toggleClass("toggled");
         });
+    </script>
+    <script>
+        var $loading = $('#loading').hide();
+        $(document)
+            .ajaxStart(function () {
+                $loading.show();
+            })
+            .ajaxStop(function () {
+                $loading.hide();
+            });
     </script>
     <script>
     $('#section_all').on('click',
