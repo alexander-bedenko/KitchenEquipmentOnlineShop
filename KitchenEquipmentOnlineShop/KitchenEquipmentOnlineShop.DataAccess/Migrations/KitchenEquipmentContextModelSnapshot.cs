@@ -30,8 +30,6 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
 
                     b.Property<string>("Country");
 
-                    b.Property<string>("Description");
-
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
@@ -83,7 +81,11 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1500);
 
+                    b.Property<int>("Form");
+
                     b.Property<byte[]>("Image");
+
+                    b.Property<int>("Material");
 
                     b.Property<string>("Name")
                         .IsRequired();

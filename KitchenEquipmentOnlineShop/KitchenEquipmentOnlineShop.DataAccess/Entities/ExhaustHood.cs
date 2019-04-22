@@ -9,7 +9,6 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Entities
 
         public Company Company { get; set; }
 
-        
         [Required]
         public string Name { get; set; }
 

@@ -17,7 +17,11 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Entities
 
         public byte[] Image { get; set; }
 
+        public SinkMaterial Material { get; set; }
+
         public SinkType Type { get; set; }
+
+        public SinkForm Form { get; set; }
 
         public float Width { get; set; }
         public float Depth { get; set; }

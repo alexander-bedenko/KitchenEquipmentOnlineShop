@@ -22,8 +22,6 @@ namespace KitchenEquipment.Controllers
 
         public IActionResult Index(int? page)
         {
-            //GetExhausts(page);
-
             return View();
         }
 
@@ -45,27 +43,10 @@ namespace KitchenEquipment.Controllers
             foreach (var key in exhausts)
             {
                 key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
+                key.CompanyCountry = companies.First(i => i.Id == key.CompanyId).Country;
             }
 
             return PartialView("_Exhausts", exhausts.ToPagedList(pageNumber, pageSize));
         }
-
-        //private IPagedList<ExhaustHoodViewModel> GetExhausts(int? page)
-        //{
-        //    int pageSize = 3;
-        //    int pageNumber = (page ?? 1);
-
-        //    var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
-        //    SelectList list = new SelectList(companies, "Id", "CompanyName");
-        //    ViewBag.Companies = list;
-        //    var exhausts = Mapper.Map<IEnumerable<ExhaustHoodViewModel>>(_exhaustHoodService.GetAll());
-
-        //    foreach (var key in exhausts)
-        //    {
-        //        key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
-        //    }
-
-        //    return exhausts.ToPagedList(pageNumber, pageSize);
-        //}
     }
 }

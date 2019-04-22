@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
 {
     [DbContext(typeof(KitchenEquipmentContext))]
-    [Migration("20190308140126_Init")]
-    partial class Init
+    [Migration("20190422125025_Added sink enums")]
+    partial class Addedsinkenums
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,6 +29,8 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
 
                     b.Property<string>("CompanyName")
                         .IsRequired();
+
+                    b.Property<string>("Country");
 
                     b.HasKey("Id");
 
@@ -81,7 +83,11 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1500);
 
+                    b.Property<int>("Form");
+
                     b.Property<byte[]>("Image");
+
+                    b.Property<int>("Material");
 
                     b.Property<string>("Name")
                         .IsRequired();

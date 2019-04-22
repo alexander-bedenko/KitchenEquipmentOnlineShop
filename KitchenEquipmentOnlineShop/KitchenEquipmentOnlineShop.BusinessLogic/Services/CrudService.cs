@@ -48,7 +48,7 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Services
         {
             var entities = _uow.Repository<TEntity>().GetAll();
             var dtos = Mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(entities);
-            
+
             return dtos;
         }
 

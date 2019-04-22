@@ -2,7 +2,8 @@
 {
     public enum SinkType
     {
-        StainlessSteel,
-        Granite
+        OneBowl,
+        OneAndAHalfBowl,
+        TwoBowls
     }
 }

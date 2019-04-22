@@ -156,7 +156,7 @@
                     Кухонные мойки
                 </a>
                 <ul class="list-group">
-                    @foreach (SinkType key in (SinkType[])Enum.GetValues(typeof(SinkType)))
+                    @foreach (SinkMaterial key in (SinkMaterial[])Enum.GetValues(typeof(SinkMaterial)))
                     {
                         <li class="list-group-item">
                             <a class="nav-main" id="@key" href="#">@key.GetDisplayName()</a>

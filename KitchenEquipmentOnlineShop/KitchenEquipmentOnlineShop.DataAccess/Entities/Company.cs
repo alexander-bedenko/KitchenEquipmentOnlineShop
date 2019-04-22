@@ -14,6 +14,8 @@ namespace KitchenEquipmentOnlineShop.DataAccess.Entities
         [Required]
         public string CompanyName { get; set; }
 
+        public string Country { get; set; }
+
         public ICollection<ExhaustHood> ExhaustHoods { get; set; }
         public ICollection<Sink> Sinks { get; set; }
     }

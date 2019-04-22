@@ -8,7 +8,9 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Dtos
         public string Name { get; set; }
         public decimal Price { get; set; }
         public byte[] Image { get; set; }
+        public SinkMaterial Material { get; set; }
         public SinkType Type { get; set; }
+        public SinkForm Form { get; set; }
         public float Width { get; set; }
         public float Depth { get; set; }
         public string Color { get; set; }

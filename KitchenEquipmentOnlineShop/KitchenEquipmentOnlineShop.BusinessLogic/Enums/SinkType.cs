@@ -1,8 +1,10 @@
-﻿namespace KitchenEquipmentOnlineShop.BusinessLogic.Enums
+﻿
+namespace KitchenEquipmentOnlineShop.BusinessLogic.Enums
 {
     public enum SinkType
     {
-        StainlessSteel,
-        Granite
+        OneBowl,
+        OneAndAHalfBowl,
+        TwoBowls
     }
 }
