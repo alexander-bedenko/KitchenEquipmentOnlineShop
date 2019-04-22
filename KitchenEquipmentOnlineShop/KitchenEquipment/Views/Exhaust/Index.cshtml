@@ -1,4 +1,5 @@
-﻿@using X.PagedList.Mvc.Common
+﻿@using KitchenEquipment.Extension
+@using X.PagedList.Mvc.Common
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<KitchenEquipment.Models.ExhaustHoodViewModel>
 
@@ -14,16 +15,17 @@
             </div>
         </div>
     </div>
-    <table class="table table-striped table-hover table-condensed table-sm">
+    <table class="table table-striped table-hover table-condensed table-sm text-center">
         <thead>
             <tr>
                 <th>Изображение</th>
                 <th>@Html.DropDownList("CompanyName", ViewBag.Companies as SelectList, "Фирма", new { @class = "btn btn-light font-weight-bold", onchange = "CallChangefunc(this.value)" })</th>
                 <th>Название</th>
+                <th>Тип</th>
                 <th>Ширина</th>
                 <th>Цвет</th>
                 <th>Цена</th>
-                <th class="text-center">Описание</th>
+                <th>Описание</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -37,10 +39,11 @@
                     </td>
                     <td>@key.CompanyName</td>
                     <td>@key.Name</td>
+                    <td>@key.Type.GetDisplayName()</td>
                     <td>@key.Width</td>
                     <td>@key.Color</td>
                     <td>@key.Price</td>
-                    <td>@key.Description</td>
+                    <td class="text-left">@key.Description</td>
                     <td>
                         <a href="@Url.Action("Edit", "Exhaust", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="@Url.Action("Delete", "Exhaust", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
