@@ -4,7 +4,6 @@ namespace KitchenEquipment.Enums
 {
     public enum ExhaustHoodType
     {
-
         [Display(Name = "Слайдер")]
         Slider,
 

@@ -21,6 +21,47 @@ div .ui-dialog {
     z-index: 101;
 }
 
+/* Modal styles */
+.modal .modal-dialog {
+    max-width: 400px;
+}
+
+.modal .modal-header, .modal .modal-body, .modal .modal-footer {
+    padding: 20px 30px;
+}
+
+.modal .modal-content {
+    border-radius: 3px;
+}
+
+.modal .modal-footer {
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
+}
+
+.modal .modal-title {
+    display: inline-block;
+}
+
+.modal .form-control {
+    border-radius: 2px;
+    box-shadow: none;
+    border-color: #dddddd;
+}
+
+.modal textarea.form-control {
+    resize: vertical;
+}
+
+.modal .btn {
+    border-radius: 2px;
+    min-width: 100px;
+}
+
+.modal form label {
+    font-weight: normal;
+}
+
 form .crud-form {
     width: 520px;
 }
@@ -37,7 +78,6 @@ form .crud-form {
 #targetImg {
     width: 100px;
     height: 80px;
-    margin-left: 50px;
 }
 
 #ajax-content {
@@ -53,4 +93,13 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance: textfield; /* Firefox */
+}
+
+#imgPreview {
+    height: 100px;
+}
+
+.image-upload {
+    height: 90px;
+    min-height: 90px;
 }

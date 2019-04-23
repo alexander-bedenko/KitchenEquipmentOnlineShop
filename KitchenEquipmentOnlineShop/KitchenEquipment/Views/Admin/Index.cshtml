@@ -18,6 +18,7 @@
     <link href="assets/css/admin/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/jquery-ui.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="assets/css/admin/admin.css" rel="stylesheet">
     <link href="assets/css/modal.css" rel="stylesheet">
@@ -31,7 +32,7 @@
                 <a class="list-group-item list-group-item-action bg-light collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Кухонные вытяжки</a>
                 <div class="collapse" id="submenu1" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
-                        <li class="nav-item"><a id="section_all" class="nav-link py-1" href="#">Все модели</a></li>
+                        <li class="nav-item"><a id="section_all_exhausts" class="nav-link py-1" href="#">Все модели</a></li>
                         @foreach (ExhaustHoodType key in (ExhaustHoodType[])Enum.GetValues(typeof(ExhaustHoodType)))
                         {
                             <li class="nav-item"><a id="@key" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
@@ -45,16 +46,22 @@
                             <a class="nav-link collapsed py-1" href="#submenu2sub1" data-toggle="collapse" data-target="#submenu2sub1">Гранитные</a>
                             <div class="collapse" id="submenu2sub1" aria-expanded="false">
                                 <ul class="flex-column nav pl-4">
-                                    <li class="nav-item">
-                                        <a class="nav-link p-1" href="#">
-                                            <i class="fa fa-fw fa-clock-o"></i> 1.5 чаши
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-1" href="#">
-                                            <i class="fa fa-fw fa-dashboard"></i> 2 чаши
-                                        </a>
-                                    </li>
+                                    <li class="nav-item"><a id="section_all_sinks_granite" class="nav-link py-1" href="#">Все модели</a></li>
+                                    @{ int i = 1;}
+                                    @foreach (SinkForm key in (SinkForm[])Enum.GetValues(typeof(SinkForm)))
+                                    {
+                                        <li class="nav-item"><a id="@key" class="nav-link py-1" href="#submenu2sub1sub@(i)" data-toggle="collapse" data-target="#submenu2sub1sub@(i)">@key.GetDisplayName()</a></li>
+                                        <div class="collapse" id="submenu2sub1sub@(i)" aria-expanded="false">
+                                            <ul class="flex-column nav pl-4">
+                                                <li class="nav-item"><a id="section_all_sinks_FORM" class="nav-link py-1" href="#">Все модели</a></li>
+                                                @foreach (SinkType type in (SinkType[])Enum.GetValues(typeof(SinkType)))
+                                                {
+                                                    <li class="nav-item"><a id="@type" class="nav-link py-1" href="#">@type.GetDisplayName()</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        i++;
+                                    }
                                 </ul>
                             </div>
                         </li>
@@ -62,16 +69,22 @@
                             <a class="nav-link collapsed py-1" href="#submenu2sub2" data-toggle="collapse" data-target="#submenu2sub2">Нержавейка</a>
                             <div class="collapse" id="submenu2sub2" aria-expanded="false">
                                 <ul class="flex-column nav pl-4">
-                                    <li class="nav-item">
-                                        <a class="nav-link p-1" href="#">
-                                            <i class="fa fa-fw fa-clock-o"></i> 1.5 чаши
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-1" href="#">
-                                            <i class="fa fa-fw fa-dashboard"></i> 2 чаши
-                                        </a>
-                                    </li>
+                                    <li class="nav-item"><a id="section_all_sinks_steel" class="nav-link py-1" href="#">Все модели</a></li>
+                                    @{ int j = 1;}
+                                    @foreach (SinkForm key in (SinkForm[])Enum.GetValues(typeof(SinkForm)))
+                                    {
+                                        <li class="nav-item"><a id="@key" class="nav-link py-1" href="#submenu2sub2sub@(j)" data-toggle="collapse" data-target="#submenu2sub2sub@(j)">@key.GetDisplayName()</a></li>
+                                        <div class="collapse" id="submenu2sub2sub@(j)" aria-expanded="false">
+                                            <ul class="flex-column nav pl-4">
+                                                <li class="nav-item"><a id="section_all_sinks_FORM" class="nav-link py-1" href="#">Все модели</a></li>
+                                                @foreach (SinkType type in (SinkType[])Enum.GetValues(typeof(SinkType)))
+                                                {
+                                                    <li class="nav-item"><a id="@type" class="nav-link py-1" href="#">@type.GetDisplayName()</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        j++;
+                                    }
                                 </ul>
                             </div>
                         </li>
@@ -143,7 +156,7 @@
             });
     </script>
     <script>
-    $('#section_all').on('click',
+        $('#section_all_exhausts').on('click',
         function() {
             $('#ajax-content').load('@Url.Action("Index", "Exhaust")');
         });
@@ -158,6 +171,54 @@
             });
         </script>
     }
+    <script>
+        $('#section_all_sinks_steel').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>
+        $('#section_all_sinks_steel_circle').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>
+        $('#section_all_sinks_steel_square').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>    
+        $('#section_all_sinks_steel_trapez').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
 
+    <script>
+        $('#section_all_sinks_granite').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>
+        $('#section_all_sinks_granite_circle').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>
+        $('#section_all_sinks_granite_square').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
+    <script>
+        $('#section_all_sinks_granite_trapez').on('click',
+            function() {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+            });
+    </script>
 </body>
 </html>

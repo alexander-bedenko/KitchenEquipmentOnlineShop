@@ -1,0 +1,103 @@
+﻿@using KitchenEquipment.Enums
+@model KitchenEquipment.Models.SinkViewModel
+
+<script src="~/assets/js/jquery.validate.min.js"></script>
+<script src="~/assets/js/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/assets/js/jquery.unobtrusive-ajax.min.js"></script>
+<script src="assets/js/imagePreview.js"></script>
+
+@using (Html.BeginForm("Edit", "Sink", FormMethod.Post, new { id = "upload", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="modal-header">
+            <h4 class="modal-title text-center">Редактирование вытяжки</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="dropdown">
+                @Html.ValidationMessageFor(model => model.Companies, "", new { @class = "text-danger" })
+                <p>
+                    @Html.DropDownListFor(model => model.CompanyId,
+                        ViewBag.Companies as SelectList,
+                        "Выберите производителя",
+                        new {@class = "form-control"})
+                </p>
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите название" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="dropdown">
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                <p>
+                    @Html.DropDownList("Type",
+                        Html.GetEnumSelectList<ExhaustHoodType>(),
+                        "Выберите тип вытяжки",
+                        new {@class = "form-control"})
+                </p>
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цвет" } })
+                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите ширину" } })
+                @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите стоимость" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <div id="imgPreview" class="thumbnail">
+                    <label class="btn btn-light">
+                        Рисунок <input type="file" id="imageBrowes" class="form-control-file" name="uploadImage" hidden />
+                    </label>
+                    @Html.HiddenFor(model => model.Image)
+                    @Html.Raw("<img class='img-responsive' id='targetImg' style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
+                              + Convert.ToBase64String(Model.Image) + "\" />")
+                    <div class="caption">
+                        <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
+                        <span id="description"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 5, placeholder = "Введите описание" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="edit" class="btn btn-success" type="submit"><strong>Сохранить</strong></button>
+        <button id="cancel" name="cancel" data-dismiss="modal" class="btn btn-secondary"><strong>Отмена</strong></button>
+    </div>
+}
+
+<script>
+    $('#upload').submit(function (e) {
+        e.preventDefault(); // stop the standard form submission
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: new FormData(this),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+                $('.modal-open').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                console.log(data.UploadedFileCount + ' file(s) uploaded successfully');
+            },
+            error: function (xhr, error, status) {
+                console.log(error, status);
+            }
+        });
+    });
+</script>

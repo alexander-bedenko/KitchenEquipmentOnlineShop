@@ -1,5 +1,5 @@
 ﻿@using KitchenEquipment.Enums
-@model KitchenEquipment.Models.ExhaustHoodViewModel
+@model KitchenEquipment.Models.SinkViewModel
 
 <script src="~/assets/js/jquery.validate.min.js"></script>
 <script src="~/assets/js/jquery.validate.unobtrusive.min.js"></script>
@@ -7,11 +7,11 @@
 <script src="assets/js/imagePreview.js"></script>
 
 
-@using (Html.BeginForm("Create", "Exhaust", FormMethod.Post, new {id = "upload", @class="crud-form", enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Create", "Sink", FormMethod.Post, new {id = "upload", @class="crud-form", enctype = "multipart/form-data"}))
     {
     @Html.AntiForgeryToken()
         <div class="modal-header">
-            <h4 class="modal-title text-center">Добавление вытяжки</h4>
+            <h4 class="modal-title text-center">Добавление мойки</h4>
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
@@ -101,7 +101,7 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                $('#ajax-content').load('@Url.Action("Index", "Exhaust")');
+                $('#ajax-content').load('@Url.Action("Index", "Sink")');
                 $('.modal-open').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();

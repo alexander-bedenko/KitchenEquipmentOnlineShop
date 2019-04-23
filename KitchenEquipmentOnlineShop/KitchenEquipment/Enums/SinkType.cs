@@ -5,7 +5,7 @@ namespace KitchenEquipment.Enums
 {
     public enum SinkType
     {
-        [Display(Name = "Одна чаша")]
+        [Display(Name = "1 чаша")]
         OneBowl,
 
         [Display(Name = "1.5 чаши")]
