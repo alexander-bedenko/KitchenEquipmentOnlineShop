@@ -25,7 +25,7 @@ namespace KitchenEquipment.Controllers
             _companyService = companyService;
         }
 
-        public IActionResult Index(string section, int value, int? page)
+        public IActionResult Index(string exhaustType, int companyId, int? page)
         {
             int pageSize = 8;
             int pageNumber = (page ?? 1);
@@ -41,15 +41,15 @@ namespace KitchenEquipment.Controllers
                 key.CompanyCountry = companies.First(i => i.Id == key.CompanyId).Country;
             }
 
-            if (section != null)
+            if (exhaustType != "All")
             {
-                var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(section));
+                var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(exhaustType));
                 return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
             }
 
-            if (value != 0)
+            if (companyId != 0)
             {
-                var exhaustVM = exhausts.Where(x => x.CompanyId == value);
+                var exhaustVM = exhausts.Where(x => x.CompanyId == companyId);
                 return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
             }
 

@@ -30,7 +30,7 @@
                     @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
                     <p>
                         @Html.DropDownList("ExhaustHoodType",
-                            Html.GetEnumSelectList<ExhaustHoodType>(),
+                            Html.GetEnumSelectList<ExhaustHoodType>().Where(x => x.Text != "Все модели"),
                             "Тип вытяжки",
                             new {@class = "form-control"})
                     </p>

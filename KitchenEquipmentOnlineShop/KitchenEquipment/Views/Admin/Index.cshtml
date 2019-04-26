@@ -1,5 +1,6 @@
 ﻿@using KitchenEquipment.Enums
 @using KitchenEquipment.Extension
+@model KitchenEquipment.Models.AdminMenuViewModel
 
 @{
     Layout = null;
@@ -32,7 +33,6 @@
                 <a class="list-group-item list-group-item-action bg-light collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Кухонные вытяжки</a>
                 <div class="collapse" id="submenu1" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
-                        <li class="nav-item"><a id="section_all_exhausts" class="nav-link py-1" href="#">Все модели</a></li>
                         @foreach (ExhaustHoodType key in (ExhaustHoodType[])Enum.GetValues(typeof(ExhaustHoodType)))
                         {
                             <li class="nav-item"><a id="@(key)" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
@@ -145,7 +145,7 @@
         <script>
         $('#@(exhaustType)').on('click',
             function() {
-                $('#ajax-content').load('@Url.Action("Index", "Exhaust", new {section = exhaustType} )');
+                $('#ajax-content').load('@Url.Action("Index", "Exhaust", new { exhaustType} )');
             });
         </script>
     }

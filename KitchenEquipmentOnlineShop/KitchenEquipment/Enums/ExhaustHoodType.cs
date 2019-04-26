@@ -4,6 +4,9 @@ namespace KitchenEquipment.Enums
 {
     public enum ExhaustHoodType
     {
+        [Display(Name = "Все модели")]
+        All,
+
         [Display(Name = "Слайдер")]
         Slider,
 

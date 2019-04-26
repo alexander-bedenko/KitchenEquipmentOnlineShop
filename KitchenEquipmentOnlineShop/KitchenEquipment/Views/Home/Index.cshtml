@@ -25,14 +25,17 @@
                     <ul>
                         @{
                             int i = 1;
-                            foreach (ExhaustHoodType key in (ExhaustHoodType[])Enum.GetValues(typeof(ExhaustHoodType)))
+                            foreach (ExhaustHoodType key in (ExhaustHoodType[]) Enum.GetValues(typeof(ExhaustHoodType)))
                             {
-                                <li>
-                                    <a id="@key" href="#">
-                                        <img src="assets/ItemSlider/images/@(i).jpg" alt="@key.GetDisplayName()"><h4>@key.GetDisplayName()</h4>
-                                    </a>
-                                </li>
-                                i++;
+                                if (!key.ToString().Equals("All"))
+                                {
+                                    <li>
+                                        <a id="@key" href="#">
+                                            <img src="assets/ItemSlider/images/@(i).jpg" alt="@key.GetDisplayName()"><h4>@key.GetDisplayName()</h4>
+                                        </a>
+                                    </li>
+                                    i++;
+                                }
                             }
                         }
                     </ul>

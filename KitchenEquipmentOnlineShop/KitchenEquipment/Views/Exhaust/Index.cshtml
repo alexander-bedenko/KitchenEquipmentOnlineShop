@@ -55,7 +55,7 @@
     <div class="clearfix">
         Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
         <div id="contentPager">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { exhaustType = @Context.Request.Query["exhaustType"], page = page }),
                 new PagedListRenderOptions {
                     LiElementClasses = new string[] { "page-item" },
                     PageClasses = new string[] { "page-link" }
@@ -75,7 +75,7 @@
 
 <script>
     function CallChangefunc(val) {
-        $('#ajax-content').load('@Url.Action("Index", "Exhaust")?value=' + val);
+        $('#ajax-content').load('@Url.Action("Index", "Exhaust", new { exhaustType = @Context.Request.Query["exhaustType"] })&companyId=' + val);
     }
 </script>
 <script src="~/assets/js/pager.js"></script>
