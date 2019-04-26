@@ -23,7 +23,7 @@ namespace KitchenEquipment.Controllers
             _companyService = companyService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page, string type, string material)
         {
             return View();
         }

@@ -35,7 +35,7 @@
                         <li class="nav-item"><a id="section_all_exhausts" class="nav-link py-1" href="#">Все модели</a></li>
                         @foreach (ExhaustHoodType key in (ExhaustHoodType[])Enum.GetValues(typeof(ExhaustHoodType)))
                         {
-                            <li class="nav-item"><a id="@key" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
+                            <li class="nav-item"><a id="@(key)" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
                         }
                     </ul>
                 </div>
@@ -47,20 +47,9 @@
                             <div class="collapse" id="submenu2sub1" aria-expanded="false">
                                 <ul class="flex-column nav pl-4">
                                     <li class="nav-item"><a id="section_all_sinks_granite" class="nav-link py-1" href="#">Все модели</a></li>
-                                    @{ int i = 1;}
-                                    @foreach (SinkForm key in (SinkForm[])Enum.GetValues(typeof(SinkForm)))
+                                    @foreach (SinkType key in (SinkType[])Enum.GetValues(typeof(SinkType)))
                                     {
-                                        <li class="nav-item"><a id="@key" class="nav-link py-1" href="#submenu2sub1sub@(i)" data-toggle="collapse" data-target="#submenu2sub1sub@(i)">@key.GetDisplayName()</a></li>
-                                        <div class="collapse" id="submenu2sub1sub@(i)" aria-expanded="false">
-                                            <ul class="flex-column nav pl-4">
-                                                <li class="nav-item"><a id="section_all_sinks_FORM" class="nav-link py-1" href="#">Все модели</a></li>
-                                                @foreach (SinkType type in (SinkType[])Enum.GetValues(typeof(SinkType)))
-                                                {
-                                                    <li class="nav-item"><a id="@type" class="nav-link py-1" href="#">@type.GetDisplayName()</a></li>
-                                                }
-                                            </ul>
-                                        </div>
-                                        i++;
+                                        <li class="nav-item"><a id="granite-@(key)" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
                                     }
                                 </ul>
                             </div>
@@ -70,20 +59,9 @@
                             <div class="collapse" id="submenu2sub2" aria-expanded="false">
                                 <ul class="flex-column nav pl-4">
                                     <li class="nav-item"><a id="section_all_sinks_steel" class="nav-link py-1" href="#">Все модели</a></li>
-                                    @{ int j = 1;}
-                                    @foreach (SinkForm key in (SinkForm[])Enum.GetValues(typeof(SinkForm)))
+                                    @foreach (SinkType key in (SinkType[])Enum.GetValues(typeof(SinkType)))
                                     {
-                                        <li class="nav-item"><a id="@key" class="nav-link py-1" href="#submenu2sub2sub@(j)" data-toggle="collapse" data-target="#submenu2sub2sub@(j)">@key.GetDisplayName()</a></li>
-                                        <div class="collapse" id="submenu2sub2sub@(j)" aria-expanded="false">
-                                            <ul class="flex-column nav pl-4">
-                                                <li class="nav-item"><a id="section_all_sinks_FORM" class="nav-link py-1" href="#">Все модели</a></li>
-                                                @foreach (SinkType type in (SinkType[])Enum.GetValues(typeof(SinkType)))
-                                                {
-                                                    <li class="nav-item"><a id="@type" class="nav-link py-1" href="#">@type.GetDisplayName()</a></li>
-                                                }
-                                            </ul>
-                                        </div>
-                                        j++;
+                                        <li class="nav-item"><a id="steel-@(key)" class="nav-link py-1" href="#">@key.GetDisplayName()</a></li>
                                     }
                                 </ul>
                             </div>
@@ -165,7 +143,7 @@
     @foreach (var exhaustType in Enum.GetNames(typeof(ExhaustHoodType)))
     {
         <script>
-        $('#@exhaustType').on('click',
+        $('#@(exhaustType)').on('click',
             function() {
                 $('#ajax-content').load('@Url.Action("Index", "Exhaust", new {section = exhaustType} )');
             });
@@ -174,51 +152,33 @@
     <script>
         $('#section_all_sinks_steel').on('click',
             function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+                $('#ajax-content').load('@Url.Action("Index", "Sink", new {material = "steel"})');
             });
     </script>
-    <script>
-        $('#section_all_sinks_steel_circle').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
-    </script>
-    <script>
-        $('#section_all_sinks_steel_square').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
-    </script>
-    <script>    
-        $('#section_all_sinks_steel_trapez').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
-    </script>
+    @foreach (var sinkType in Enum.GetNames(typeof(SinkType)))
+    {
+        <script>
+            $('#steel-@(sinkType)').on('click',
+                function() {
+                    $('#ajax-content').load('@Url.Action("Index", "Sink", new {type = "steel_" + sinkType } )');
+                });
+        </script>
+    }
 
     <script>
         $('#section_all_sinks_granite').on('click',
             function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+                $('#ajax-content').load('@Url.Action("Index", "Sink", new {material = "granite"})');
             });
     </script>
+    @foreach (var sinkType in Enum.GetNames(typeof(SinkType)))
+    {
     <script>
-        $('#section_all_sinks_granite_circle').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
+            $('#granite-@(sinkType)').on('click',
+                function() {
+                    $('#ajax-content').load('@Url.Action("Index", "Sink", new {type = "granite_" + sinkType } )');
+                });
     </script>
-    <script>
-        $('#section_all_sinks_granite_square').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
-    </script>
-    <script>
-        $('#section_all_sinks_granite_trapez').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            });
-    </script>
+    }
 </body>
 </html>
