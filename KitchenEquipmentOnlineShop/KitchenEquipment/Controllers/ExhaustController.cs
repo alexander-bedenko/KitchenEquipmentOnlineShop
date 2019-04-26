@@ -18,6 +18,7 @@ namespace KitchenEquipment.Controllers
     {
         private IExhaustHoodService _exhaustHoodService;
         private ICompanyService _companyService;
+        private int pageSize = 8;
 
         public ExhaustController(IExhaustHoodService exhaustHoodService, ICompanyService companyService)
         {
@@ -27,23 +28,20 @@ namespace KitchenEquipment.Controllers
 
         public IActionResult Index(string exhaustType, int companyId, int? page)
         {
-            int pageSize = 8;
             int pageNumber = (page ?? 1);
 
-            var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
-            SelectList list = new SelectList(companies, "Id", "CompanyName");
-            ViewBag.Companies = list;
-            var exhausts = Mapper.Map<IEnumerable<ExhaustHoodViewModel>>(_exhaustHoodService.GetAll());
+            ViewBag.Companies = GetListOfCompanies(GetAllCompanies);
 
-            foreach (var key in exhausts)
-            {
-                key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
-                key.CompanyCountry = companies.First(i => i.Id == key.CompanyId).Country;
-            }
+            var exhausts = GetExhaustsWithCompanyName(GetAllCompanies);
 
             if (exhaustType != "All")
             {
                 var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(exhaustType));
+                if (companyId != 0)
+                {
+                    var exhaustsVMPaged = exhaustVM.Where(x => x.CompanyId == companyId);
+                    return PartialView("Index", exhaustsVMPaged.ToPagedList(pageNumber, pageSize));
+                }
                 return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
             }
 
@@ -141,6 +139,38 @@ namespace KitchenEquipment.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        private SelectList GetListOfCompanies(IEnumerable<CompanyViewModel> companies)
+        {
+            return new SelectList(companies, "Id", "CompanyName");
+        }
+
+        private IEnumerable<CompanyViewModel> GetAllCompanies => Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
+        private IEnumerable<ExhaustHoodViewModel> GetAllExhausts => Mapper.Map<IEnumerable<ExhaustHoodViewModel>>(_exhaustHoodService.GetAll());
+
+        private IEnumerable<ExhaustHoodViewModel> GetExhaustsWithCompanyName(IEnumerable<CompanyViewModel> companies)
+        {
+            var exhausts = GetAllExhausts;
+            foreach (var key in exhausts)
+            {
+                key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
+                key.CompanyCountry = companies.First(i => i.Id == key.CompanyId).Country;
+            }
+
+            return exhausts;
+        }
+
+        private IActionResult GetExhaustsByType(IEnumerable<ExhaustHoodViewModel> exhausts, string exhaustType, int pageNumber)
+        {
+            var exhaustVM = exhausts.Where(x => x.Type.ToString().Equals(exhaustType));
+            return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
+        }
+
+        private IActionResult GetExhaustsByCompanyId(IEnumerable<ExhaustHoodViewModel> exhausts, int? companyId, int pageNumber)
+        {
+            var exhaustVM = exhausts.Where(x => x.CompanyId == companyId);
+            return PartialView("Index", exhaustVM.ToPagedList(pageNumber, pageSize));
         }
     }
 }

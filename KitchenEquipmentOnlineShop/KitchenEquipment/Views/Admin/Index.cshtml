@@ -1,6 +1,5 @@
 ﻿@using KitchenEquipment.Enums
 @using KitchenEquipment.Extension
-@model KitchenEquipment.Models.AdminMenuViewModel
 
 @{
     Layout = null;
@@ -133,12 +132,6 @@
                 $loading.hide();
             });
     </script>
-    <script>
-        $('#section_all_exhausts').on('click',
-        function() {
-            $('#ajax-content').load('@Url.Action("Index", "Exhaust")');
-        });
-    </script>
 
     @foreach (var exhaustType in Enum.GetNames(typeof(ExhaustHoodType)))
     {
@@ -149,12 +142,7 @@
             });
         </script>
     }
-    <script>
-        $('#section_all_sinks_steel').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink", new {material = "steel"})');
-            });
-    </script>
+
     @foreach (var sinkType in Enum.GetNames(typeof(SinkType)))
     {
         <script>
@@ -165,12 +153,6 @@
         </script>
     }
 
-    <script>
-        $('#section_all_sinks_granite').on('click',
-            function() {
-                $('#ajax-content').load('@Url.Action("Index", "Sink", new {material = "granite"})');
-            });
-    </script>
     @foreach (var sinkType in Enum.GetNames(typeof(SinkType)))
     {
     <script>
