@@ -10,8 +10,7 @@
                 <h2>Вытяжки: <b>Модерн</b> </h2>
             </div>
             <div class="col-sm-6">
-                <a href="@Url.Action("Create", "Exhaust")" class="btn btn-success viewDialog" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Добавить</span></a>
-                @*<a href="#deleteModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Удалить</span></a>*@
+                <a href="@Url.Action("Create", "Exhaust", new { url = @Context.Request.QueryString })" class="btn btn-success viewDialog" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Добавить</span></a>
             </div>
         </div>
     </div>
@@ -45,8 +44,8 @@
                     <td>@key.Price</td>
                     <td class="text-left">@key.Description</td>
                     <td>
-                        <a href="@Url.Action("Edit", "Exhaust", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="@Url.Action("Delete", "Exhaust", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="@Url.Action("Edit", "Exhaust", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="@Url.Action("Delete", "Exhaust", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             }

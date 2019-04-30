@@ -1,11 +1,8 @@
 ﻿@model KitchenEquipment.Models.SinkViewModel
 <script src="~/assets/js/jquery.unobtrusive-ajax.js"></script>
 
-<form asp-action="Delete" asp-controller="Exhaust"
-      data-ajax="true"
-      data-ajax-method="POST"
-      data-ajax-mode="replace"
-      data-ajax-update="#ajax-content">
+@using (Html.BeginForm("Delete", "Sink", FormMethod.Post, new { id = "upload" }))
+{
 
     @Html.AntiForgeryToken()
     <div class="modal-body login-modal">
@@ -17,18 +14,33 @@
             <p>Вы уверены?</p>
         </div>
     </div>
-    
+
     <div class="modal-footer">
-        <button id="create" class="btn btn-danger" type="submit"><strong>Удалить</strong></button>
+        <button id="delete" class="btn btn-danger" type="submit"><strong>Удалить</strong></button>
     </div>
-</form>
+}
+
 
 <script>
-    $('#create').on('click',
-        function () {
-            $('#ajax-content').load('@Url.Action("Index", "Sink")');
-            $('.modal-open').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
+    $('#upload').submit(function (e) {
+        e.preventDefault(); // stop the standard form submission
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: new FormData(this),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('#ajax-content').load('@Url.Action("Index", "Sink")@Html.Raw(ViewBag.Url)');
+                $('.modal-open').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            },
+            error: function (xhr, error, status) {
+                console.log(error, status);
+            }
         });
+    });
 </script>

@@ -10,8 +10,7 @@
                 <h2>Вытяжки: <b>Модерн</b> </h2>
             </div>
             <div class="col-sm-6">
-                <a href="@Url.Action("Create", "Sink")" class="btn btn-success viewDialog" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Добавить</span></a>
-                @*<a href="#deleteModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Удалить</span></a>*@
+                <a href="@Url.Action("Create", "Sink", new { url = @Context.Request.QueryString })" class="btn btn-success viewDialog" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Добавить</span></a>
             </div>
         </div>
     </div>
@@ -45,8 +44,8 @@
                     <td>@key.Price</td>
                     <td class="text-left">@key.Description</td>
                     <td>
-                        <a href="@Url.Action("Edit", "Sink", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                        <a href="@Url.Action("Delete", "Sink", new {id = key.Id})" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="@Url.Action("Edit", "Sink", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="@Url.Action("Delete", "Sink", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             }
@@ -55,7 +54,7 @@
     <div class="clearfix">
         Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
         <div id="contentPager">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { type = @Context.Request.Query["type"], page }),
                 new PagedListRenderOptions {
                     LiElementClasses = new string[] { "page-item" },
                     PageClasses = new string[] { "page-link" }
@@ -75,7 +74,7 @@
 
 <script>
     function CallChangefunc(val) {
-        $('#ajax-content').load('@Url.Action("Index", "Sink")?value=' + val);
+        $('#ajax-content').load('@Url.Action("Index", "Sink", new { type = @Context.Request.Query["type"] })&companyId=' + val);
     }
 </script>
 <script src="~/assets/js/pager.js"></script>

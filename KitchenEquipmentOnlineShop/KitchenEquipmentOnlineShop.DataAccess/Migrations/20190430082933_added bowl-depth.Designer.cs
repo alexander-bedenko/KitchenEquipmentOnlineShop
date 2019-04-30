@@ -4,14 +4,16 @@ using KitchenEquipmentOnlineShop.DataAccess.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KitchenEquipmentOnlineShop.DataAccess.Migrations
 {
     [DbContext(typeof(KitchenEquipmentContext))]
-    partial class KitchenEquipmentContextModelSnapshot : ModelSnapshot
+    [Migration("20190430082933_added bowl-depth")]
+    partial class addedbowldepth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

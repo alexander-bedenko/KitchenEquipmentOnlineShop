@@ -9,65 +9,106 @@
 @using (Html.BeginForm("Edit", "Sink", FormMethod.Post, new { id = "upload", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <h4 class="modal-title text-center">Редакстирование мойки</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
     <div class="modal-body">
-        <div class="modal-header">
-            <h4 class="modal-title text-center">Редактирование вытяжки</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="dropdown">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-6">
                 @Html.ValidationMessageFor(model => model.Companies, "", new { @class = "text-danger" })
                 <p>
                     @Html.DropDownListFor(model => model.CompanyId,
                         ViewBag.Companies as SelectList,
-                        "Выберите производителя",
+                        "Производитель",
                         new {@class = "form-control"})
                 </p>
             </div>
-            <div class="form-group">
+            <div class="col-6">
+                @Html.ValidationMessageFor(model => model.Material, "", new { @class = "text-danger" })
+                <p>
+                    <select asp-for="Material" asp-items="Html.GetEnumSelectList<SinkMaterial>()" class="form-control">
+                        <option>Материал мойки</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                <p>
+                    <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(SinkType)).Skip(1)" class="form-control">
+                        <option>Тип мойки</option>
+                    </select>
+                </p>
+            </div>
+
+            <div class="col-6">
+                @Html.ValidationMessageFor(model => model.Form, "", new { @class = "text-danger" })
+                <p>
+                    <select asp-for="Form" asp-items="Html.GetEnumSelectList<SinkForm>()" class="form-control">
+                        <option>Форма мойки</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите название" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
-            <div class="dropdown">
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                <p>
-                    @Html.DropDownList("Type",
-                        Html.GetEnumSelectList<ExhaustHoodType>(),
-                        "Выберите тип вытяжки",
-                        new {@class = "form-control"})
-                </p>
-            </div>
-            <div class="form-group">
-                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цвет" } })
-                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите ширину" } })
-                @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите стоимость" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                <div id="imgPreview" class="thumbnail">
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите ширину" } })
+                @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                @Html.EditorFor(model => model.Depth, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите глубину" } })
+                @Html.ValidationMessageFor(model => model.Depth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                @Html.EditorFor(model => model.BowlDepth, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите глубину чаши" } })
+                @Html.ValidationMessageFor(model => model.BowlDepth, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цвет" } })
+                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div id="imgPreview" class="form-group thumbnail  align-content-center">
+            <div class="row image-upload align-items-center align-content-center">
+                <div class="col-6">
                     <label class="btn btn-light">
                         Рисунок <input type="file" id="imageBrowes" class="form-control-file" name="uploadImage" hidden />
                     </label>
+                </div>
+                <div class="col-6">
                     @Html.HiddenFor(model => model.Image)
                     @Html.Raw("<img class='img-responsive' id='targetImg' style='width:100px; height:80px;' src=\"data:image/jpeg;base64,"
                               + Convert.ToBase64String(Model.Image) + "\" />")
-                    <div class="caption">
-                        <a href="#" onclick="ClearPreview()"><i class="glyphicon glyphicon-trash"></i></a>
-                        <span id="description"></span>
-                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 5, placeholder = "Введите описание" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            <div class="caption">
+                <span id="description" class="font-weight-bold" style="font-size: xx-small"></span>
             </div>
+        </div>
+
+        <div class="form-group">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 5, placeholder = "Введите описание" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -89,11 +130,11 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+                $('#ajax-content').load('@Url.Action("Index", "Sink")@Html.Raw(ViewBag.Url)');
                 $('.modal-open').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                console.log(data.UploadedFileCount + ' file(s) uploaded successfully');
+                console.log('АДРЭС    @Html.Raw(ViewBag.Url)');
             },
             error: function (xhr, error, status) {
                 console.log(error, status);

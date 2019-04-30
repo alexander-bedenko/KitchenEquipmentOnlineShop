@@ -4,9 +4,6 @@ namespace KitchenEquipment.Enums
 {
     public enum SinkForm
     {
-        [Display(Name = "Все модели")]
-        All,
-
         [Display(Name = "Круглая - овальная")]
         CircleOval,
 

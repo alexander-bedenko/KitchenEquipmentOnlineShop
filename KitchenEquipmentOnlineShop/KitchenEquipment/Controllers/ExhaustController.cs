@@ -55,11 +55,12 @@ namespace KitchenEquipment.Controllers
         }
 
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(string url)
         {
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
             ViewBag.Companies = list;
+            ViewBag.Url = url;
             return PartialView("_Create");
         }
 
@@ -81,7 +82,7 @@ namespace KitchenEquipment.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, string url)
         {
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
@@ -89,6 +90,7 @@ namespace KitchenEquipment.Controllers
             var exhaust = _exhaustHoodService.Get(x => x.Id == id);
             if (exhaust != null)
             {
+                ViewBag.Url = url;
                 return PartialView("_Edit", Mapper.Map<ExhaustHoodDto, ExhaustHoodViewModel>(_exhaustHoodService.Get(x => x.Id == id)));
             }
             return View("Index");
@@ -116,11 +118,12 @@ namespace KitchenEquipment.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string url)
         {
             var exhaust = _exhaustHoodService.Get(x => x.Id == id);
             if (exhaust != null)
             {
+                ViewBag.Url = url;
                 return PartialView("_Delete", Mapper.Map<ExhaustHoodDto, ExhaustHoodViewModel>(_exhaustHoodService.Get(x => x.Id == id)));
             }
             return View("Index");

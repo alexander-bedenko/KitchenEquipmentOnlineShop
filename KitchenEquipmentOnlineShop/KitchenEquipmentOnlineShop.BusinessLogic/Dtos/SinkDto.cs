@@ -13,6 +13,7 @@ namespace KitchenEquipmentOnlineShop.BusinessLogic.Dtos
         public SinkForm Form { get; set; }
         public float Width { get; set; }
         public float Depth { get; set; }
+        public float BowlDepth { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }
     }

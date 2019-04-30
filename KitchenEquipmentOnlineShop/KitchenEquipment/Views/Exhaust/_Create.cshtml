@@ -29,10 +29,9 @@
                 <div class="col-6">
                     @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
                     <p>
-                        @Html.DropDownList("ExhaustHoodType",
-                            Html.GetEnumSelectList<ExhaustHoodType>().Where(x => x.Text != "Все модели"),
-                            "Тип вытяжки",
-                            new {@class = "form-control"})
+                        <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(ExhaustHoodType)).Skip(1)" class="form-control">
+                            <option>Тип вытяжки</option>
+                        </select>
                     </p>
                 </div>
             </div>
@@ -101,7 +100,7 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                $('#ajax-content').load('@Url.Action("Index", "Exhaust")');
+                $('#ajax-content').load('@Url.Action("Index", "Exhaust")@Html.Raw(ViewBag.Url)');
                 $('.modal-open').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();

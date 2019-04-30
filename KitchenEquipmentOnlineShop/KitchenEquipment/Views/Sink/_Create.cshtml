@@ -27,12 +27,31 @@
                     </p>
                 </div>
                 <div class="col-6">
+                    @Html.ValidationMessageFor(model => model.Material, "", new { @class = "text-danger" })
+                    <p>
+                        <select asp-for="Material" asp-items="Html.GetEnumSelectList<SinkMaterial>()" class="form-control">
+                            <option>Материал мойки</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-6">
                     @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
                     <p>
-                        @Html.DropDownList("ExhaustHoodType",
-                            Html.GetEnumSelectList<ExhaustHoodType>(),
-                            "Тип вытяжки",
-                            new {@class = "form-control"})
+                        <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(SinkType)).Skip(1)" class="form-control">
+                            <option>Тип мойки</option>
+                        </select>
+                    </p>
+                </div>
+
+                <div class="col-6">
+                    @Html.ValidationMessageFor(model => model.Form, "", new { @class = "text-danger" })
+                    <p>
+                        <select asp-for="Form" asp-items="Html.GetEnumSelectList<SinkForm>()" class="form-control">
+                            <option>Форма мойки</option>
+                        </select>
                     </p>
                 </div>
             </div>
@@ -42,21 +61,31 @@
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите название" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-
                 <div class="form-group col-6">
-                    @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цвет" } })
-                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите стоимость" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="form-group col-6">
                     @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите ширину" } })
                     @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-6">
-                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите стоимость" } })
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Depth, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите глубину" } })
+                    @Html.ValidationMessageFor(model => model.Depth, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="form-group col-6">
+                    @Html.EditorFor(model => model.BowlDepth, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите глубину чаши" } })
+                    @Html.ValidationMessageFor(model => model.BowlDepth, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-6">
+                    @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цвет" } })
+                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -101,11 +130,11 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                $('#ajax-content').load('@Url.Action("Index", "Sink")');
+                $('#ajax-content').load('@Url.Action("Index", "Sink")@Html.Raw(ViewBag.Url)');
                 $('.modal-open').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                console.log(data.UploadedFileCount + ' file(s) uploaded successfully');
+                console.log('АДРЭС     @Html.Raw(ViewBag.Url)');
             },
             error: function (xhr, error, status) {
                 console.log(error, status);

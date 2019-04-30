@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using KitchenEquipment.Models;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 
 namespace KitchenEquipment.Controllers
 {
@@ -16,6 +19,7 @@ namespace KitchenEquipment.Controllers
     {
         private ISinkService _sinkService;
         private ICompanyService _companyService;
+        private int pageSize = 8;
 
         public SinkController(ISinkService sinkService, ICompanyService companyService)
         {
@@ -23,17 +27,50 @@ namespace KitchenEquipment.Controllers
             _companyService = companyService;
         }
 
-        public IActionResult Index(int? page, string type, string material)
+        public IActionResult Index(string type, int companyId, int? page)
         {
-            return View();
+            string material = string.Empty;
+            string sinkType = string.Empty;
+            if (type != null)
+            {
+                var sink = type.Split("-");
+                material = sink[0];
+                sinkType = sink[1];
+            }
+
+            int pageNumber = (page ?? 1);
+
+            ViewBag.Companies = GetListOfCompanies(GetAllCompanies);
+
+            var sinks = GetSinksWithCompanyName(GetAllCompanies, material);
+
+            if (sinkType != "All")
+            {
+                var sinkVM = sinks.Where(x => x.Type.ToString().Equals(sinkType, StringComparison.OrdinalIgnoreCase));
+                if (companyId != 0)
+                {
+                    var sinkVMPaged = sinkVM.Where(x => x.CompanyId == companyId);
+                    return PartialView("Index", sinkVMPaged.ToPagedList(pageNumber, pageSize));
+                }
+                return PartialView("Index", sinkVM.ToPagedList(pageNumber, pageSize));
+            }
+
+            if (companyId != 0)
+            {
+                var sinkVM = sinks.Where(x => x.CompanyId == companyId);
+                return PartialView("Index", sinkVM.ToPagedList(pageNumber, pageSize));
+            }
+
+            return PartialView("Index", sinks.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(string url)
         {
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
             ViewBag.Companies = list;
+            ViewBag.Url = url;
             return PartialView("_Create");
         }
 
@@ -55,7 +92,7 @@ namespace KitchenEquipment.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, string url)
         {
             var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
             SelectList list = new SelectList(companies, "Id", "CompanyName");
@@ -63,6 +100,7 @@ namespace KitchenEquipment.Controllers
             var sink = _sinkService.Get(x => x.Id == id);
             if (sink != null)
             {
+                ViewBag.Url = url;
                 return PartialView("_Edit", Mapper.Map<SinkDto, SinkViewModel>(_sinkService.Get(x => x.Id == id)));
             }
             return View("Index");
@@ -90,11 +128,12 @@ namespace KitchenEquipment.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string url)
         {
             var sink = _sinkService.Get(x => x.Id == id);
             if (sink != null)
             {
+                ViewBag.Url = url;
                 return PartialView("_Delete", Mapper.Map<SinkDto, SinkViewModel>(_sinkService.Get(x => x.Id == id)));
             }
             return View("Index");
@@ -113,6 +152,26 @@ namespace KitchenEquipment.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        private SelectList GetListOfCompanies(IEnumerable<CompanyViewModel> companies)
+        {
+            return new SelectList(companies, "Id", "CompanyName");
+        }
+
+        private IEnumerable<CompanyViewModel> GetAllCompanies => Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
+        private IEnumerable<SinkViewModel> GetAllSinks => Mapper.Map<IEnumerable<SinkViewModel>>(_sinkService.GetAll());
+
+        private IEnumerable<SinkViewModel> GetSinksWithCompanyName(IEnumerable<CompanyViewModel> companies, string material)
+        {
+            var sinks = GetAllSinks.Where(x => x.Material.ToString().Equals(material, StringComparison.OrdinalIgnoreCase));
+            foreach (var key in sinks)
+            {
+                key.CompanyName = companies.First(i => i.Id == key.CompanyId).CompanyName;
+                key.CompanyCountry = companies.First(i => i.Id == key.CompanyId).Country;
+            }
+
+            return sinks;
         }
     }
 }
