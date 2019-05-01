@@ -65,7 +65,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Другое</a>
+                <a href="#" id="companies" class="list-group-item list-group-item-action bg-light">Компании</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -160,5 +160,13 @@
                 });
     </script>
     }
+
+<script>
+    $('#companies').on('click',
+        function() {
+            $('#ajax-content').load('@Url.Action("Index", "Company")');
+        });
+</script>
+
 </body>
 </html>
