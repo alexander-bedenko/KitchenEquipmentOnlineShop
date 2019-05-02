@@ -81,6 +81,18 @@ namespace KitchenEquipment.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Detail(int id)
+        {
+            var companies = Mapper.Map<IEnumerable<CompanyViewModel>>(_companyService.GetAll());
+            SelectList list = new SelectList(companies, "Id", "CompanyName");
+            var exhaust = _exhaustHoodService.Get(x => x.Id == id);
+            if (exhaust != null)
+            {
+                return PartialView("_Detail", Mapper.Map<ExhaustHoodDto, ExhaustHoodViewModel>(_exhaustHoodService.Get(x => x.Id == id)));
+            }
+            return View("Index");
+        }
+
         [Authorize]
         public IActionResult Edit(int id, string url)
         {

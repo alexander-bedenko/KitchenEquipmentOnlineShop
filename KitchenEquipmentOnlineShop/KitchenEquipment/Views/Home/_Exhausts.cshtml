@@ -30,7 +30,10 @@
                         <td><strong>@key.Width см.</strong></td>
                     </tr>
                 </table>
-                <p><a href="#" class="btn btn-success" role="button">В корзину</a> <a href="#" class="btn btn-primary" role="button">Дополнительно</a></p>
+                <p>
+                    <a href="#" class="btn btn-success" role="button">В корзину</a>
+                    <a href="@Url.Action("Detail", "Exhaust", new {id = key.Id})" class="btn btn-primary" data-toggle="modal" data-target="#exhaust-detail" role="button">Дополнительно</a>
+                </p>
             </div>
         </div>
     </div>
@@ -46,6 +49,17 @@
         })
 
 </div>
+
+<!-- The Modal -->
+<div class="modal fade" id="exhaust-detail">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+        
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $(document).on("click",
@@ -61,5 +75,8 @@
                 });
                 return false;
             });
+        $('body').on('hidden.bs.modal', '.modal', function () {
+            $(this).removeData('bs.modal');
+        });
     })
 </script>

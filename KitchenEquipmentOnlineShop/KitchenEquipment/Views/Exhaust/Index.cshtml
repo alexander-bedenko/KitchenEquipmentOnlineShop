@@ -42,7 +42,7 @@
                     <td>@key.Width</td>
                     <td>@key.Color</td>
                     <td>@key.Price</td>
-                    <td class="text-left">@key.Description</td>
+                    <td class="text-left"> @Html.Raw(@key.Description)</td>
                     <td>
                         <a href="@Url.Action("Edit", "Exhaust", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="@Url.Action("Delete", "Exhaust", new {id = key.Id, url = @Context.Request.QueryString })" class="viewDialog"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
